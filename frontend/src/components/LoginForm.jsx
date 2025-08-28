@@ -1,45 +1,58 @@
-import { useState } from "react";
-import { useAuth } from "../context/useAuth";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [role, setRole] = useState("client");
-  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  // Auto-redirect if already logged in
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      navigate(storedUser.role === "client" ? "/client" : "/staff", { replace: true });
+    }
+  }, [navigate]);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const user = await login(username, role);
-    if (!user) return;
-    if (user.role === "client") navigate("/client");
-    else if (user.role === "staff") navigate("/staff");
+    const user = { username, role };
+    localStorage.setItem("user", JSON.stringify(user));
+    navigate(role === "client" ? "/client" : "/staff");
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 to-indigo-200 px-4">
       <form
-        className="bg-white p-6 rounded shadow-md w-96"
         onSubmit={handleSubmit}
+        className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md flex flex-col"
       >
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
+        <h2 className="text-4xl font-bold mb-8 text-center text-blue-700">Login</h2>
+
+        <label className="block mb-2 font-medium text-gray-700">Username</label>
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Enter your username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="border p-2 mb-4 w-full"
+          className="border border-gray-300 rounded-xl p-3 mb-6 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           required
         />
+
+        <label className="block mb-2 font-medium text-gray-700">Role</label>
         <select
           value={role}
           onChange={(e) => setRole(e.target.value)}
-          className="border p-2 mb-4 w-full"
+          className="border border-gray-300 rounded-xl p-3 mb-8 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
         >
           <option value="client">Client</option>
           <option value="staff">Staff</option>
         </select>
-        <button className="bg-blue-500 text-white p-2 w-full rounded">
+
+        <button
+          type="submit"
+          className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-blue-500 text-white font-semibold py-3 rounded-xl shadow-md transition-colors duration-300"
+        >
           Login
         </button>
       </form>

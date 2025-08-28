@@ -1,38 +1,24 @@
+// src/context/AuthProvider.jsx
+import { useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { useState, useEffect } from "react";
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // Load user from localStorage on first render
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
-  useEffect(() => {
-    const saved = localStorage.getItem("auth");
-    if (saved) setUser(JSON.parse(saved));
-  }, []);
-
-  const login = async (username, role) => {
-    try {
-      const res = await fetch("http://localhost:4000/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, role }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        alert(data.error || "Login failed");
-        return null;
-      }
-      setUser(data);
-      localStorage.setItem("auth", JSON.stringify(data));
-      return data;
-    } catch (err) {
-      console.error("Login error:", err);
-      return null;
-    }
+  const login = (username, role) => {
+    const loggedInUser = { username, role };
+    setUser(loggedInUser);
+    localStorage.setItem("user", JSON.stringify(loggedInUser)); // persist
+    return loggedInUser; // useful for redirect after login
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("auth");
+    localStorage.removeItem("user");
   };
 
   return (

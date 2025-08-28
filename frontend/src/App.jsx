@@ -1,26 +1,19 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-
-import { useAuth } from "./context/useAuth";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import ClientDashboardPage from "./pages/ClientDashboardPage";
 import StaffDashboardPage from "./pages/StaffDashboardPage";
 
 function App() {
-  const { user } = useAuth();
-
   const ProtectedRoute = ({ children, role }) => {
-    if (!user) return <Navigate to="/" replace />;
-    if (role && user.role !== role) return <Navigate to="/" replace />;
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+
+    if (!storedUser) return <Navigate to="/" replace />; // not logged in
+    if (role && storedUser.role !== role) return <Navigate to="/" replace />; // wrong role
+
     return children;
   };
 
   return (
-    // Router must be at the top
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
@@ -40,6 +33,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );
