@@ -1,5 +1,11 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useAuth } from "./context/AuthContext";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
+import { useAuth } from "./context/useAuth";
 import LoginPage from "./pages/LoginPage";
 import ClientDashboardPage from "./pages/ClientDashboardPage";
 import StaffDashboardPage from "./pages/StaffDashboardPage";
