@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { getFiles } from "../../services/fileService";
 
-
 export default function StaffDashboard() {
   const [files, setFiles] = useState([]);
 
@@ -12,7 +11,7 @@ export default function StaffDashboard() {
   const handleValidate = (fileName) => {
     alert(`Validated ${fileName} ✅`);
     // Optional: remove validated file
-    setFiles(files.filter(f => f.name !== fileName));
+    setFiles((prevFiles) => prevFiles.filter((f) => f.name !== fileName));
   };
 
   return (
@@ -22,7 +21,10 @@ export default function StaffDashboard() {
         {files.map((file, idx) => (
           <li key={idx} className="flex justify-between items-center mb-2">
             <span>{file.name}</span>
-            <button className="bg-blue-500 text-white px-3 py-1 rounded" onClick={() => handleValidate(file.name)}>
+            <button
+              className="bg-blue-500 text-white px-3 py-1 rounded"
+              onClick={() => handleValidate(file.name)}
+            >
               Validate
             </button>
           </li>

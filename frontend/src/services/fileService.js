@@ -1,14 +1,27 @@
-// src/services/fileService.js
+const API_URL = "http://localhost:4000/files";
 
-// Mock file upload
-export const uploadFile = async (file) => {
-  return { success: true, filename: file.name };
+// Upload a file to backend
+export const uploadFile = async (file, user) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("username", user.username); // add username
+  formData.append("role", user.role);         // add role
+
+  const res = await fetch(`${API_URL}/upload`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    throw new Error(`Upload failed with status ${res.status}`);
+  }
+
+  return res.json(); // returns { success: true, file }
 };
 
-// Mock fetching uploaded files
+// Get all uploaded files from backend
 export const getFiles = async () => {
-  return [
-    { id: 1, name: "doc1.pdf" },
-    { id: 2, name: "doc2.pdf" },
-  ];
+  const res = await fetch(API_URL);
+  if (!res.ok) throw new Error("Failed to fetch files");
+  return res.json(); // returns array of { id, name }
 };

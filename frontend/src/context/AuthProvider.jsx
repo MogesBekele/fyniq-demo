@@ -1,4 +1,3 @@
-// src/context/AuthProvider.jsx
 import { AuthContext } from "./AuthContext";
 import { useState, useEffect } from "react";
 
@@ -10,11 +9,25 @@ export const AuthProvider = ({ children }) => {
     if (saved) setUser(JSON.parse(saved));
   }, []);
 
-  const login = (username, role) => {
-    const userData = { username, role, token: "mock-jwt-token" };
-    setUser(userData);
-    localStorage.setItem("auth", JSON.stringify(userData));
-    return userData;
+  const login = async (username, role) => {
+    try {
+      const res = await fetch("http://localhost:4000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, role }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.error || "Login failed");
+        return null;
+      }
+      setUser(data);
+      localStorage.setItem("auth", JSON.stringify(data));
+      return data;
+    } catch (err) {
+      console.error("Login error:", err);
+      return null;
+    }
   };
 
   const logout = () => {

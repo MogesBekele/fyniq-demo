@@ -1,13 +1,25 @@
 // src/services/authService.js
+const API_URL = "http://localhost:4000/auth";
 
-// Mock login function
+// Real login function
 export const login = async (username, role) => {
-  // In a real app, this would be a fetch/axios call
-  return { username, role, token: "mock-jwt-token" };
+  try {
+    const res = await fetch(`${API_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, role }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Login failed");
+    return data; // { username, role, token }
+  } catch (err) {
+    console.error("Login error:", err);
+    return null;
+  }
 };
 
-// Mock logout function
+// Real logout function
 export const logout = async () => {
-  // In a real app, you might call backend to invalidate token
+  // Optional: call backend to invalidate token if needed
   return true;
 };
