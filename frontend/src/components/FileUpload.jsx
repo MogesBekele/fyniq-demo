@@ -13,16 +13,23 @@ export default function FileUpload({ onUpload }) {
 
     const formData = new FormData();
     formData.append("file", file);
-
+    formData.append("username", user.username); // add username
+    formData.append("role", user.role);
     try {
-      const res = await axios.post("http://localhost:4000/files/upload", formData, {
-        headers: { Authorization: `Bearer ${user.token}` },
-        onUploadProgress: (e) => setProgress(Math.round((e.loaded * 100) / e.total)),
-      });
+      const res = await axios.post(
+        "http://localhost:4000/files/upload",
+        formData,
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+          onUploadProgress: (e) =>
+            setProgress(Math.round((e.loaded * 100) / e.total)),
+        }
+      );
 
       if (onUpload) onUpload(res.data.filename);
       setFile(null);
       setProgress(0);
+      alert("Upload successful");
     } catch (err) {
       console.error(err);
       alert("Upload failed");
@@ -32,7 +39,10 @@ export default function FileUpload({ onUpload }) {
   return (
     <div className="p-4 border rounded bg-gray-50">
       <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-      <button className="ml-2 bg-green-500 text-white px-4 py-2 rounded" onClick={handleUpload}>
+      <button
+        className="ml-2 bg-green-500 text-white px-4 py-2 rounded"
+        onClick={handleUpload}
+      >
         Upload
       </button>
       {progress > 0 && (

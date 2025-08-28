@@ -10,11 +10,16 @@ export const login = async (req, res) => {
   }
 
   try {
-    // Check if user exists
     let user = await User.findOne({ username });
     if (!user) {
       // Create a new user
       user = await User.create({ username, role });
+    } else {
+      // Update role if it's different
+      if (user.role !== role) {
+        user.role = role;
+        await user.save();
+      }
     }
 
     // Generate JWT
