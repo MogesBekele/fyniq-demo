@@ -1,7 +1,6 @@
-import React, { createContext, useState, useEffect } from "react";
-import { login as loginService, logout as logoutService } from "../services/authService";
-
-export const AuthContext = createContext(null);
+// src/context/AuthProvider.jsx
+import { AuthContext } from "./AuthContext";
+import { useState, useEffect } from "react";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -11,15 +10,14 @@ export const AuthProvider = ({ children }) => {
     if (saved) setUser(JSON.parse(saved));
   }, []);
 
-  const login = async (username, role) => {
-    const userData = await loginService(username, role);
+  const login = (username, role) => {
+    const userData = { username, role, token: "mock-jwt-token" };
     setUser(userData);
     localStorage.setItem("auth", JSON.stringify(userData));
     return userData;
   };
 
-  const logout = async () => {
-    await logoutService();
+  const logout = () => {
     setUser(null);
     localStorage.removeItem("auth");
   };

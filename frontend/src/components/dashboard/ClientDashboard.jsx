@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+
 import FileUpload from "../FileUpdoad";
+import { getFiles } from "../../services/fileService";
 
 export default function ClientDashboard() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
+
+  useEffect(() => {
+    getFiles().then((files) => setUploadedFiles(files.map(f => f.name)));
+  }, []);
 
   return (
     <div className="p-6">

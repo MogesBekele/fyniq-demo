@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useAuth } from "../context/UseAuth";
+import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
 
-export default function LoginForm() {
+export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [role, setRole] = useState("client");
   const { login } = useAuth();
@@ -12,7 +12,6 @@ export default function LoginForm() {
     e.preventDefault();
     const user = login(username, role);
 
-    // Redirect based on role
     if (user.role === "client") navigate("/client");
     else if (user.role === "staff") navigate("/staff");
   };
@@ -24,16 +23,12 @@ export default function LoginForm() {
         <input
           type="text"
           placeholder="Username"
-          className="border p-2 mb-4 w-full"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          className="border p-2 mb-4 w-full"
           required
         />
-        <select
-          className="border p-2 mb-4 w-full"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-        >
+        <select value={role} onChange={(e) => setRole(e.target.value)} className="border p-2 mb-4 w-full">
           <option value="client">Client</option>
           <option value="staff">Staff</option>
         </select>
