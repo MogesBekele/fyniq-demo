@@ -38,7 +38,6 @@ export default function FileUpload({ onUpload }) {
 
       if (onUpload) onUpload(newFile);
 
-      // Reset file input after a short delay
       setTimeout(() => {
         setFile(null);
         setProgress(0);
@@ -54,25 +53,33 @@ export default function FileUpload({ onUpload }) {
       setProgress(fakeProgress);
       if (fakeProgress === 100) {
         clearInterval(interval);
-        reader.readAsDataURL(file); // read file after progress finishes
+        reader.readAsDataURL(file);
       }
     }, 100);
   };
 
   return (
-    <div className="p-4 border rounded bg-gray-50">
-      <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-      <button
-        className="ml-2 bg-green-500 text-white px-4 py-2 rounded"
-        onClick={handleUpload}
-      >
-        Upload
-      </button>
+    <div className="flex flex-col items-center justify-center w-full max-w-md mx-auto p-6 bg-white rounded-3xl shadow-lg h-60">
+      <h3 className="text-xl font-semibold text-gray-700 mb-4">Upload Your File</h3>
+
+      <div className="flex flex-col sm:flex-row items-center w-full gap-3">
+        <input
+          type="file"
+          onChange={(e) => setFile(e.target.files[0])}
+          className="border border-gray-300 rounded-lg p-2 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+        />
+        <button
+          onClick={handleUpload}
+          className="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow transition"
+        >
+          Upload
+        </button>
+      </div>
 
       {progress > 0 && (
-        <div className="mt-2 w-full bg-gray-300 h-4 rounded">
+        <div className="w-full bg-gray-200 h-4 rounded mt-4">
           <div
-            className="bg-blue-500 h-4 rounded transition-all duration-200"
+            className="bg-blue-500 h-4 rounded transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>

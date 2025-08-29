@@ -31,20 +31,22 @@ export default function ClientDashboard() {
 
       {/* Uploaded Files */}
       {uploadedFiles.length > 0 && (
-        <div className="mt-6 space-y-4">
+        <div className="m-20">
           {uploadedFiles.map((file) => (
             <div
               key={file.id}
-              className="border rounded-lg p-4 bg-gray-50 shadow-sm hover:shadow-md transition"
+              className=" justify-between flex border border-gray-200 rounded-lg p-4 bg-gray-50 shadow-sm hover:shadow-md transition"
             >
-              <p className="font-medium text-gray-800">
+              <p className="font-medium text-gray-800 ">
                 📄 {file.filename}{" "}
-                <span className="text-sm text-gray-500">
-                  by {file.uploader}
-                </span>
+            
+              
               </p>
+                  <button onClick={() => setUploadedFiles((prev) => prev.filter((f) => f.id !== file.id))}>Delete</button>
             </div>
+            
           ))}
+        
         </div>
       )}
     </div>
