@@ -22,14 +22,22 @@ export default function AuthPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let loggedInUser;
 
     if (isRegister) {
-      loggedInUser = await register(username, password, role); // 👈 include password
-    } else {
-      loggedInUser = await login(username, password); // 👈 include password
+      const registeredUser = await register(username, password, role);
+      if (!registeredUser) return;
+
+      
+      alert("Registration successful! Please login."); // optional 
+      setIsRegister(false); // switch to login form
+      setUsername("");
+      setPassword("");
+      setRole("client"); // reset role
+      return; // do NOT navigate to dashboard
     }
 
+    // Login flow
+    const loggedInUser = await login(username, password);
     if (!loggedInUser) return;
 
     const path = loggedInUser.role === "client" ? "/client" : "/staff";
@@ -99,8 +107,8 @@ export default function AuthPage() {
           className="mt-6 text-center text-sm text-blue-600 cursor-pointer hover:underline"
         >
           {isRegister
-            ? "Already have an account? Login"
-            : "Don't have an account? Register"}
+            ? "Already have an account?  Login"
+            : "Don't have an account?  Register"}
         </p>
       </form>
     </div>
