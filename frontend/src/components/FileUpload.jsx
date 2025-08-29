@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { logAction } from "../utils/auditLogger";
 
 export default function FileUpload({ onUpload }) {
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("auth"));
 
   const handleUpload = () => {
     if (!file) return alert("Select a file");
@@ -23,18 +24,17 @@ export default function FileUpload({ onUpload }) {
         data: reader.result,
       };
 
-      localStorage.setItem("files", JSON.stringify([...existingFiles, newFile]));
+      localStorage.setItem(
+        "files",
+        JSON.stringify([...existingFiles, newFile])
+      );
 
-      // Audit log
-      const logs = JSON.parse(localStorage.getItem("logs") || "[]");
-      logs.push({
-        id: Date.now(),
+      // Use centralized audit logger
+      logAction({
         action: "upload",
         file: newFile.filename,
         user: user.username,
-        timestamp: new Date().toISOString(),
       });
-      localStorage.setItem("logs", JSON.stringify(logs));
 
       if (onUpload) onUpload(newFile);
 
@@ -48,7 +48,7 @@ export default function FileUpload({ onUpload }) {
     // Simulate progress visually
     let fakeProgress = 0;
     const interval = setInterval(() => {
-      fakeProgress += Math.floor(Math.random() * 15) + 5; // random step
+      fakeProgress += Math.floor(Math.random() * 15) + 5;
       if (fakeProgress >= 100) fakeProgress = 100;
       setProgress(fakeProgress);
       if (fakeProgress === 100) {
@@ -60,7 +60,9 @@ export default function FileUpload({ onUpload }) {
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-md mx-auto p-6 bg-white rounded-3xl shadow-lg h-60">
-      <h3 className="text-xl font-semibold text-gray-700 mb-4">Upload Your File</h3>
+      <h3 className="text-xl font-semibold text-gray-700 mb-4">
+        Upload Your File
+      </h3>
 
       <div className="flex flex-col sm:flex-row items-center w-full gap-3">
         <input

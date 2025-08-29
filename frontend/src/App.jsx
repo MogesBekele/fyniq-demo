@@ -5,7 +5,7 @@ import StaffDashboardPage from "./pages/StaffDashboardPage";
 
 function App() {
   const ProtectedRoute = ({ children, role }) => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedUser = JSON.parse(localStorage.getItem("auth"));
 
     if (!storedUser) return <Navigate to="/" replace />; // not logged in
     if (role && storedUser.role !== role) return <Navigate to="/" replace />; // wrong role

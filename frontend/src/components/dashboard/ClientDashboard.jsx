@@ -1,13 +1,16 @@
 import { useState } from "react";
 import FileUpload from "../FileUpload";
+import { useAuth } from "../../context/useAuth";
 
 export default function ClientDashboard() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const {logout} = useAuth();
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    window.location.href = "/";
-  };
+const handleLogout=()=>{
+  logout();
+  window.location.href = "/"; // redirect to login page
+}
+
 
   return (
     <div className="min-h-screen w-full bg-gray-100 flex flex-col">
