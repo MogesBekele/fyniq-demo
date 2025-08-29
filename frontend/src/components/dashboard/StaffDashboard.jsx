@@ -34,63 +34,67 @@ export default function StaffDashboard() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 p-6 flex flex-col">
+    <div className="min-h-screen w-full bg-gray-100 flex flex-col">
       {/* Header */}
-      <div className="flex flex-row  mb-6 w-full">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
+      <header className="w-full bg-white shadow px-10 py-4 mb-10  flex justify-between items-center sticky top-0 z-10">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-700">
           Staff Dashboard
         </h1>
         <button
           onClick={handleLogout}
-          className="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition"
+          className="bg-gray-200 hover:bg-gray-400 text-gray-800 px-3 py-1 rounded-lg shadow transition hover:cursor-pointer"
         >
           Logout
         </button>
-      </div>
+      </header>
 
-      {/* Table or Empty State */}
-      {files.length === 0 ? (
-        <p className="text-gray-500 text-lg">No files available.</p>
-      ) : (
-        <div className="overflow-x-auto w-full flex-1">
-          <table className="min-w-full bg-white rounded-lg shadow">
-            <thead>
-              <tr className="bg-gray-200 text-gray-700 uppercase text-sm">
-                <th className="py-3 px-4 text-left">Filename</th>
-                <th className="py-3 px-4 text-left">Uploader</th>
-                <th className="py-3 px-4 text-left">Role</th>
-                <th className="py-3 px-4 text-left">Uploaded At</th>
-                <th className="py-3 px-4 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {files.map((file) => (
-                <tr
-                  key={file.id}
-                  className="border-b hover:bg-gray-50 transition"
-                >
-                  <td className="py-3 px-4 break-words">{file.filename}</td>
-                  <td className="py-3 px-4">{file.uploader}</td>
-                  <td className="py-3 px-4">
-                    {file.role.charAt(0).toUpperCase() + file.role.slice(1)}
-                  </td>
-                  <td className="py-3 px-4">
-                    {new Date(file.uploadedAt).toLocaleString()}
-                  </td>
-                  <td className="py-3 px-4 text-center">
-                    <button
-                      onClick={() => handleValidate(file.filename)}
-                      className="bg-black text-white px-3 py-1 rounded hover:bg-blue-600 transition"
-                    >
-                      Validate
-                    </button>
-                  </td>
+      {/* Main Content */}
+      <main className="flex-1 px-20 p-6">
+        {files.length === 0 ? (
+          <div className="flex justify-center items-center h-full">
+            <p className="text-gray-500 text-lg">No files available.</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto bg-white shadow rounded-lg">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-gray-200 text-gray-700 uppercase text-sm">
+                  <th className="py-3 px-4">Filename</th>
+                  <th className="py-3 px-4">Uploader</th>
+
+                  <th className="max-sm:hidden py-3 px-4">Uploaded At</th>
+                  <th className="py-3 px-4 text-center">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+              </thead>
+              <tbody>
+                {files.map((file, idx) => (
+                  <tr
+                    key={file.id || idx}
+                    className={`border-b border-gray-300 ${
+                      idx % 2 === 0 ? "bg-gray-50" : "bg-white"
+                    } hover:bg-blue-50 transition hover:cursor-pointer`}
+                  >
+                    <td className="py-3 px-4 break-words">{file.filename}</td>
+                    <td className="py-3 px-4">{file.uploader}</td>
+
+                    <td className="max-sm:hidden py-1 px-2">
+                      {new Date(file.uploadedAt).toLocaleString()}
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      <button
+                        onClick={() => handleValidate(file.filename)}
+                        className="bg-gray-200 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg shadow transition"
+                      >
+                        Validate
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </main>
     </div>
   );
 }
