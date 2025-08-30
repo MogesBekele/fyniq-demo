@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 
 const logSchema = new mongoose.Schema({
   action: { type: String, enum: ["upload", "delete", "approve", "reject"], required: true },
-  file: { type: String, required: true },
+  file: { type: String, required: true },  // original filename
   user: { type: String, required: true },
-}, { timestamps: true }); // adds createdAt automatically
+  timestamp: { type: Date, default: Date.now },
+});
 
-export default mongoose.model("Log", logSchema);
-
+const Log = mongoose.model("Log", logSchema);
+export default Log;

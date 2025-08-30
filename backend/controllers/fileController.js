@@ -63,7 +63,7 @@ export const handleFileAction = async (req, res) => {
     const file = await File.findById(id);
     if (!file) return res.status(404).json({ error: "File not found" });
 
-    if (action === "approve") file.status = "approved";
+    if (action === "validate") file.status = "validated";
     else if (action === "reject") file.status = "rejected";
     else return res.status(400).json({ error: "Invalid action" });
 

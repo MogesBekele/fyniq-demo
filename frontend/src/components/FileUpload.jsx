@@ -1,100 +1,3 @@
-// import { useState } from "react";
-// import { logAction } from "../utils/auditLogger";
-
-// export default function FileUpload({ onUpload }) {
-//   const [file, setFile] = useState(null);
-//   const [progress, setProgress] = useState(0);
-
-//   const user = JSON.parse(localStorage.getItem("auth"));
-
-//   const handleUpload = () => {
-//     if (!file) return alert("Select a file");
-
-//     const reader = new FileReader();
-
-//     reader.onload = () => {
-//       const existingFiles = JSON.parse(localStorage.getItem("files") || "[]");
-
-//       const newFile = {
-//         id: Date.now(),
-//         filename: file.name,
-//         uploader: user.username,
-//         role: user.role,
-//         uploadedAt: new Date().toISOString(),
-//         data: reader.result,
-//       };
-
-//       localStorage.setItem(
-//         "files",
-//         JSON.stringify([...existingFiles, newFile])
-//       );
-
-//       // Use centralized audit logger
-//       logAction({
-//         action: "upload",
-//         file: newFile.filename,
-//         user: user.username,
-//       });
-
-//       if (onUpload) onUpload(newFile);
-
-//       setTimeout(() => {
-//         setFile(null);
-//         setProgress(0);
-//         alert("Upload successful ✅");
-//       }, 500);
-//     };
-
-//     // Simulate progress visually
-//     let fakeProgress = 0;
-//     const interval = setInterval(() => {
-//       fakeProgress += Math.floor(Math.random() * 15) + 5;
-//       if (fakeProgress >= 100) fakeProgress = 100;
-//       setProgress(fakeProgress);
-//       if (fakeProgress === 100) {
-//         clearInterval(interval);
-//         reader.readAsDataURL(file);
-//       }
-//     }, 100);
-//   };
-
-//   return (
-//     <div className="flex flex-col items-center justify-center w-full max-w-md mx-auto p-6 bg-white rounded-3xl shadow-lg h-60">
-//       <h3 className="text-xl font-semibold text-gray-700 mb-4">
-//         Upload Your File
-//       </h3>
-
-//       <div className="flex flex-col sm:flex-row items-center w-full gap-3">
-//         <input
-//           type="file"
-//           accept="application/pd"
-//           onChange={(e) => setFile(e.target.files[0])}
-//           className="border border-gray-300 rounded-lg p-2 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-//         />
-//         <button
-//           onClick={handleUpload}
-//           className="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow transition"
-//         >
-//           Upload
-//         </button>
-//       </div>
-
-//       {progress > 0 && (
-//         <div className="w-full bg-gray-200 h-4 rounded mt-4">
-//           <div
-//             className="bg-blue-500 h-4 rounded transition-all duration-300"
-//             style={{ width: `${progress}%` }}
-//           />
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-
-
-
-
 import { useState } from "react";
 import axios from "axios";
 
@@ -102,8 +5,7 @@ export default function FileUpload({ onUpload }) {
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
 
-  const user = JSON.parse(localStorage.getItem("auth")); 
-  // expected: { username: "John", role: "client" }
+  const user = JSON.parse(localStorage.getItem("auth"));
 
   const handleUpload = async () => {
     if (!file) return alert("Select a file first!");
@@ -113,15 +15,20 @@ export default function FileUpload({ onUpload }) {
     formData.append("username", user.username);
     formData.append("role", user.role);
 
+    // Simulate progress in steps
+    setProgress(0);
+    const steps = [25, 50, 75, 100];
+    let stepIndex = 0;
+
+    const interval = setInterval(() => {
+      setProgress(steps[stepIndex]);
+      stepIndex++;
+      if (stepIndex >= steps.length) clearInterval(interval);
+    }, 300); // 300ms per step
+
     try {
       const res = await axios.post("http://localhost:4000/api/files/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
-        onUploadProgress: (event) => {
-          if (event.total) {
-            const percent = Math.round((event.loaded * 100) / event.total);
-            setProgress(percent);
-          }
-        },
       });
 
       if (onUpload) onUpload(res.data.file);
@@ -130,10 +37,12 @@ export default function FileUpload({ onUpload }) {
         setFile(null);
         setProgress(0);
         alert("Upload successful ✅");
-      }, 500);
+      }, 1300); // slightly longer to match fake progress
     } catch (err) {
       console.error(err);
       alert("Upload failed ❌");
+      clearInterval(interval);
+      setProgress(0);
     }
   };
 
@@ -158,14 +67,82 @@ export default function FileUpload({ onUpload }) {
       </div>
 
       {progress > 0 && (
-        <div className="w-full bg-gray-200 h-4 rounded mt-4">
+        <div className="w-full bg-gray-200 h-4 rounded mt-4 relative">
           <div
-            className="bg-blue-500 h-4 rounded transition-all duration-300"
+            className="bg-blue-500 h-5 rounded transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
+          <span className="absolute right-2 top-0 text-sm text-gray-700">
+            {progress}%
+          </span>
         </div>
       )}
     </div>
   );
 }
 
+
+
+
+
+
+
+
+// ----------------------------
+// MOCK FILE UPLOAD (CLIENT SIDE)
+// ----------------------------
+// This simulates uploading a file to the server without a real backend.
+// Useful for demo purposes or when backend is not ready.
+
+// export const mockFileUpload = async (file, user) => {
+//   console.log(`Mock upload called for file: ${file.name}, user: ${user.username}`);
+
+//   return new Promise((resolve, reject) => {
+//     // Simulate a progress-like delay
+//     const steps = [25, 50, 75, 100];
+//     let stepIndex = 0;
+
+//     const interval = setInterval(() => {
+//       console.log(`Progress: ${steps[stepIndex]}%`);
+//       stepIndex++;
+//       if (stepIndex >= steps.length) clearInterval(interval);
+//     }, 300); // 300ms per step
+
+//     // Simulate final API response after 1.2s
+//     setTimeout(() => {
+//       resolve({
+//         status: 200,
+//         message: `File "${file.name}" uploaded successfully (mock).`,
+//         file: {
+//           id: Date.now(),
+//           originalName: file.name,
+//           uploader: user.username,
+//           role: user.role,
+//           uploadedAt: new Date().toISOString(),
+//           status: "pending",
+//         },
+//       });
+//     }, 1300);
+//   });
+// };
+
+/* 
+Usage Example:
+
+import { mockFileUpload } from './mockFileUpload';
+
+const handleUpload = async () => {
+  if (!file) return alert("Select a file first!");
+
+  try {
+    const res = await mockFileUpload(file, user);
+    if (onUpload) onUpload(res.file);
+    alert(res.message);
+    setFile(null);
+    setProgress(0);
+  } catch (err) {
+    console.error("Upload failed", err);
+    alert("Upload failed ❌");
+  }
+};
+*/
