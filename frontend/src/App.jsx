@@ -1,4 +1,12 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+
 import LoginPage from "./pages/LoginPage";
 import ClientDashboardPage from "./pages/ClientDashboardPage";
 import StaffDashboardPage from "./pages/StaffDashboardPage";
@@ -36,8 +44,21 @@ function App() {
           }
         />
         <Route path="*" element={<Navigate to="/" replace />} />
-        
       </Routes>
+
+      {/* Toast container for global toast notifications */}
+      <ToastContainer
+        position="top-right" // where the toast appears
+        autoClose={500} // all toasts disappear after 1.5s
+        hideProgressBar={false} // show progress bar
+        newestOnTop={true} // new toasts appear on top
+        closeOnClick // close toast on click
+        rtl={false} // left-to-right layout
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        style={{ width: "250px" }}
+      />
     </Router>
   );
 }

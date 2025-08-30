@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/useAuth";
+import { toast } from "react-toastify"; // ✅ import toast
 
 export default function StaffDashboard() {
   const [files, setFiles] = useState([]);
@@ -14,6 +15,7 @@ export default function StaffDashboard() {
         setFiles(res.data);
       } catch (err) {
         console.error("Error fetching files", err);
+        toast.error("Failed to fetch files ❌");
       }
     };
     fetchFiles();
@@ -33,16 +35,19 @@ export default function StaffDashboard() {
         )
       );
 
-      alert(`${action === "approve" ? "Validated" : "Rejected"} ✅`);
+      toast.success(
+        `${action === "approve" ? "Validated" : "Rejected"}`
+      );
     } catch (err) {
       console.error(`${action} failed`, err);
-      alert(`Action "${action}" failed`);
+      toast.error(`Action "${action}" failed `);
     }
   };
 
   const handleLogout = () => {
     localStorage.removeItem("auth");
     logout();
+    toast.info("Logged out successfully");
     window.location.href = "/";
   };
 
@@ -57,13 +62,13 @@ export default function StaffDashboard() {
       <div className="flex gap-2 justify-center">
         <button
           onClick={() => handleAction(file._id, "approve")}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow transition"
+          className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg shadow transition"
         >
           Validate
         </button>
         <button
           onClick={() => handleAction(file._id, "reject")}
-          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow transition"
+          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg shadow transition"
         >
           Reject
         </button>
@@ -159,61 +164,3 @@ export default function StaffDashboard() {
     </div>
   );
 }
-
-
-
-
-// ----------------------------
-// MOCK CRA GATEWAY INTEGRATION
-// ----------------------------
-// This is a stub to simulate CRA Gateway validation.
-// You can comment it out in production, but keep it
-// for demonstration purposes.
-
-// export const mockCRAGateway = async (file, action) => {
-//   console.log(`Mock CRA Gateway called for file: ${file.originalName}, action: ${action}`);
-
-//   return new Promise((resolve, reject) => {
-//     setTimeout(() => {
-//       if (action === "approve") {
-//         resolve({
-//           status: 200,
-//           message: `File "${file.originalName}" successfully validated (mock).`,
-//           file: {
-//             ...file,
-//             status: "approved",
-//           },
-//         });
-//       } else if (action === "reject") {
-//         resolve({
-//           status: 200,
-//           message: `File "${file.originalName}" rejected (mock).`,
-//           file: {
-//             ...file,
-//             status: "rejected",
-//           },
-//         });
-//       } else {
-//         reject(new Error("Unknown action"));
-//       }
-//     }, 1000); // Simulate 1 second network delay
-//   });
-// };
-
-/* 
-Usage Example:
-
-import { mockCRAGateway } from './mockCRAGateway';
-
-const handleAction = async (file, action) => {
-  try {
-    const res = await mockCRAGateway(file, action);
-    setFiles(prev => prev.map(f => (f._id === file._id ? res.file : f)));
-    alert(res.message);
-  } catch (err) {
-    console.error(`${action} failed`, err);
-    alert(`Action "${action}" failed`);
-  }
-};
-*/
-

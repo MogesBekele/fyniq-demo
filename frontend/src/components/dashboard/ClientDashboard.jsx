@@ -56,15 +56,17 @@
 //   );
 // }
 
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import FileUpload from "../FileUpload";
 import { useAuth } from "../../context/useAuth";
+import { toast } from "react-toastify";
+
 
 export default function ClientDashboard() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const { logout } = useAuth();
+ 
 
   useEffect(() => {
     // Fetch files on mount
@@ -74,6 +76,7 @@ export default function ClientDashboard() {
         setUploadedFiles(res.data);
       } catch (err) {
         console.error("Error fetching files", err);
+        toast.error("Failed to fetch files ❌");
       }
     };
     fetchFiles();
@@ -86,15 +89,18 @@ export default function ClientDashboard() {
         data: { username: user.username },
       });
       setUploadedFiles((prev) => prev.filter((f) => f._id !== id));
+      toast.success("File deleted ");
     } catch (err) {
       console.error("Delete failed", err);
+      toast.error("Failed to delete file");
     }
   };
 
   const handleLogout = () => {
     localStorage.removeItem("auth");
     logout();
-    window.location.href = "/"; 
+    toast.info("Logged out successfully");
+    window.location.href = "/";
   };
 
   return (
@@ -113,7 +119,12 @@ export default function ClientDashboard() {
       </header>
 
       {/* File Upload Section */}
-      <FileUpload onUpload={(file) => setUploadedFiles((prev) => [...prev, file])} />
+      <FileUpload
+        onUpload={(file) => {
+          setUploadedFiles((prev) => [...prev, file]);
+         
+        }}
+      />
 
       {/* Uploaded Files */}
       {uploadedFiles.length > 0 && (

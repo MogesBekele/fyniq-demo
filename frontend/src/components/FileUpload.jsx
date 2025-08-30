@@ -1,14 +1,18 @@
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { useRef } from "react";
 
 export default function FileUpload({ onUpload }) {
+   const inputRef = useRef(null)
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
 
   const user = JSON.parse(localStorage.getItem("auth"));
 
   const handleUpload = async () => {
-    if (!file) return alert("Select a file first!");
+    if (!file) return toast.warn("Select a file first!");
 
     const formData = new FormData();
     formData.append("file", file);
@@ -24,25 +28,35 @@ export default function FileUpload({ onUpload }) {
       setProgress(steps[stepIndex]);
       stepIndex++;
       if (stepIndex >= steps.length) clearInterval(interval);
-    }, 300); // 300ms per step
+
+      // Show toast when reaching 100%
+      if (steps[stepIndex - 1] === 100) {
+        toast.success(`uploaded successfully`);
+      }
+    }, 300);
 
     try {
-      const res = await axios.post("http://localhost:4000/api/files/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await axios.post(
+        "http://localhost:4000/api/files/upload",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
       if (onUpload) onUpload(res.data.file);
 
       setTimeout(() => {
         setFile(null);
+
         setProgress(0);
-        alert("Upload successful ✅");
       }, 1300); // slightly longer to match fake progress
+      inputRef.current.value = ''
     } catch (err) {
       console.error(err);
-      alert("Upload failed ❌");
       clearInterval(interval);
       setProgress(0);
+      toast.error("Upload failed ❌");
     }
   };
 
@@ -55,6 +69,7 @@ export default function FileUpload({ onUpload }) {
       <div className="flex flex-col sm:flex-row items-center w-full gap-3">
         <input
           type="file"
+          ref={inputRef}
           onChange={(e) => setFile(e.target.files[0])}
           className="border border-gray-300 rounded-lg p-2 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
         />
@@ -80,12 +95,6 @@ export default function FileUpload({ onUpload }) {
     </div>
   );
 }
-
-
-
-
-
-
 
 
 // ----------------------------
