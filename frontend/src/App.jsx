@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginPage from "./pages/LoginPage";
 import ClientDashboardPage from "./pages/ClientDashboardPage";
 import StaffDashboardPage from "./pages/StaffDashboardPage";
+import LogsDashboardPage from "./pages/LogsDashboardPage";
 
 function App() {
   const ProtectedRoute = ({ children, role }) => {
@@ -17,6 +18,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/logs" element={<LogsDashboardPage />} />
         <Route
           path="/client"
           element={
@@ -34,6 +36,7 @@ function App() {
           }
         />
         <Route path="*" element={<Navigate to="/" replace />} />
+        
       </Routes>
     </Router>
   );
