@@ -35,9 +35,7 @@ export default function StaffDashboard() {
         )
       );
 
-      toast.success(
-        `${action === "approve" ? "Validated" : "Rejected"}`
-      );
+      toast.success(`${action === "approve" ? "Validated" : "Rejected"}`);
     } catch (err) {
       console.error(`${action} failed`, err);
       toast.error(`Action "${action}" failed `);
@@ -92,7 +90,7 @@ export default function StaffDashboard() {
           </a>
           <button
             onClick={handleLogout}
-           className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition hover:cursor-pointer"
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition hover:cursor-pointer"
           >
             Logout
           </button>
@@ -126,7 +124,9 @@ export default function StaffDashboard() {
                         idx % 2 === 0 ? "bg-gray-50" : "bg-white"
                       } hover:bg-blue-50 transition`}
                     >
-                      <td className="py-3 px-4 break-words">{file.originalName}</td>
+                      <td className="py-3 px-4 break-words">
+                        {file.originalName}
+                      </td>
                       <td className="py-3 px-4">{file.uploader}</td>
                       <td className="py-3 px-4">
                         {new Date(file.uploadedAt).toLocaleString()}
@@ -150,7 +150,9 @@ export default function StaffDashboard() {
                   <p className="font-semibold text-gray-800 break-words">
                     📄 {file.originalName}
                   </p>
-                  <p className="text-gray-500 text-sm">Uploader: {file.uploader}</p>
+                  <p className="text-gray-500 text-sm">
+                    Uploader: {file.uploader}
+                  </p>
                   <p className="text-gray-400 text-sm">
                     Uploaded: {new Date(file.uploadedAt).toLocaleString()}
                   </p>
