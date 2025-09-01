@@ -11,7 +11,6 @@
 //   window.location.href = "/"; // redirect to login page
 // }
 
-
 //   return (
 //     <div className="min-h-screen w-full bg-gray-100 flex flex-col">
 //       {/* Header */}
@@ -42,14 +41,13 @@
 //             >
 //               <p className="font-medium text-gray-800 ">
 //                 📄 {file.filename}{" "}
-            
-              
+
 //               </p>
 //                   <button onClick={() => setUploadedFiles((prev) => prev.filter((f) => f.id !== file.id))}>Delete</button>
 //             </div>
-            
+
 //           ))}
-        
+
 //         </div>
 //       )}
 //     </div>
@@ -62,11 +60,9 @@ import FileUpload from "../FileUpload";
 import { useAuth } from "../../context/useAuth";
 import { toast } from "react-toastify";
 
-
 export default function ClientDashboard() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const { logout } = useAuth();
- 
 
   useEffect(() => {
     // Fetch files on mount
@@ -122,7 +118,6 @@ export default function ClientDashboard() {
       <FileUpload
         onUpload={(file) => {
           setUploadedFiles((prev) => [...prev, file]);
-         
         }}
       />
 
@@ -134,7 +129,9 @@ export default function ClientDashboard() {
               key={file._id}
               className="flex justify-between border border-gray-200 rounded-lg p-4 bg-gray-50 shadow-sm hover:shadow-md transition"
             >
-              <p className="font-medium text-gray-800">📄 {file.originalName}</p>
+              <p className="font-medium text-gray-800">
+                📄 {file.originalName}
+              </p>
               <button
                 onClick={() => handleDelete(file._id)}
                 className="text-red-500 hover:text-red-700"
