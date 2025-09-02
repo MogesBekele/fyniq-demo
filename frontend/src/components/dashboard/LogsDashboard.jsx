@@ -81,7 +81,6 @@ export default function AdminLogs() {
           </div>
         ) : (
           <>
-          
             {/* Desktop Table */}
             <div className="hidden md:block bg-white shadow rounded-lg border border-gray-200 mx-auto w-11/12 max-w-4xl overflow-x-auto ">
               <table className="w-full table-auto text-left border-collapse">
