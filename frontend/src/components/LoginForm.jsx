@@ -27,8 +27,7 @@ export default function AuthPage() {
       const registeredUser = await register(username, password, role);
       if (!registeredUser) return;
 
-      
-      alert("Registration successful! Please login."); // optional 
+      alert("Registration successful! Please login."); // optional
       setIsRegister(false); // switch to login form
       setUsername("");
       setPassword("");
