@@ -80,13 +80,13 @@ export default function StaffDashboard() {
     <div className="min-h-screen w-full bg-gray-100 flex flex-col">
       {/* Header */}
       <header className="w-full bg-white shadow px-10 py-4 mb-10 flex justify-between items-center sticky top-0 z-10">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-700">
+        <h1 className="text-xl md:text-3xl font-bold text-gray-700 ">
           Staff Dashboard
         </h1>
-        <div className="flex items-center gap-4 ">
+        <div className="flex flex-col items-center gap-4 ">
           <Link
           to="/logs"
-            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition max-sm:hidden"
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition "
           >
             View Logs
           </Link>
