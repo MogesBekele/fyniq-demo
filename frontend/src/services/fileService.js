@@ -1,13 +1,16 @@
-const API_URL = "http://localhost:4000/files";
+import { useAuth } from "../context/AuthProvider";
+
+
 
 // Upload a file to backend
 export const uploadFile = async (file, user) => {
+  const { API_URL } = useAuth();
   const formData = new FormData();
   formData.append("file", file);
   formData.append("username", user.username); // add username
   formData.append("role", user.role);         // add role
 
-  const res = await fetch(`${API_URL}/upload`, {
+  const res = await fetch(`${API_URL}/api/files/upload`, {
     method: "POST",
     body: formData,
   });

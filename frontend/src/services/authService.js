@@ -1,10 +1,12 @@
-// src/services/authService.js
-const API_URL = "http://localhost:4000/auth";
+import {useAuth} from "../context/AuthProvider";
+
+
 
 // Real login function
 export const login = async (username, role) => {
+  const {API_URL} = useAuth();
   try {
-    const res = await fetch(`${API_URL}/login`, {
+    const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, role }),
