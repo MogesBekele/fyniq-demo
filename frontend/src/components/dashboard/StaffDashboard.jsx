@@ -130,7 +130,7 @@ export default function StaffDashboard() {
           <>
             <Link
               to="/logs"
-              className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition sm:hidden"
+              className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 mb-4 rounded-lg shadow transition sm:hidden"
             >
               View Logs
             </Link>
