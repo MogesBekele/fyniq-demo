@@ -148,7 +148,7 @@ export default function AdminLogs() {
                   </p>
                   <p className="text-gray-600 text-sm">User: {log.user}</p>
                   <p className="text-gray-500 text-sm">
-                    Time: {formatDate(log.createdAt)}
+                  {log.timestamp ? formatDate(log.timestamp) : "N/A"}
                   </p>
                 </div>
               ))}
