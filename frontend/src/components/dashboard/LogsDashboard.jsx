@@ -24,23 +24,23 @@ export default function AdminLogs() {
     }).format(parsedDate);
   };
 
-const fetchLogs = async () => {
-  try {
-    setLoading(true);
-    const res = await axios.get(`${API_URL}/api/logs`);
+  const fetchLogs = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(`${API_URL}/api/logs`);
 
-    // Sort newest first
-    const sorted = res.data.sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    );
+      // Sort newest first
+      const sorted = res.data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
 
-    setLogs(sorted);
-  } catch (err) {
-    console.error("Failed to fetch logs", err);
-  } finally {
-    setLoading(false);
-  }
-};
+      setLogs(sorted);
+    } catch (err) {
+      console.error("Failed to fetch logs", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchLogs();
@@ -125,7 +125,7 @@ const fetchLogs = async () => {
                       <td className="py-3 px-4 break-all">{log.file}</td>
                       <td className="py-3 px-4 break-words">{log.user}</td>
                       <td className="py-3 px-4 break-words">
-                        {formatDate(log.createdAt)}
+                        {log.timestamp ? formatDate(log.timestamp) : "N/A"}
                       </td>
                     </tr>
                   ))}
