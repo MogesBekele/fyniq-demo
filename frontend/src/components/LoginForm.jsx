@@ -7,7 +7,7 @@ export default function AuthPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState(""); // 👈 password state
   const [role, setRole] = useState("client");
-  const [isRegister, setIsRegister] = useState(false);
+  const [isRegister, setIsRegister] = useState(true);
   const { user, login, register, loading } = useAuth();
   const navigate = useNavigate();
 
