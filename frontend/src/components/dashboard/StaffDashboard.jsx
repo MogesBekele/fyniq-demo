@@ -128,13 +128,6 @@ export default function StaffDashboard() {
           </div>
         ) : (
           <>
-            <Link
-              to="/logs"
-              className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 mb-6 rounded-lg shadow transition sm:hidden"
-            >
-              View Logs
-            </Link>
-
             <div className="grid gap-4 md:gap-6">
               {/* Desktop Table */}
               <div className="hidden md:block overflow-x-auto bg-white shadow rounded-lg">
@@ -170,6 +163,12 @@ export default function StaffDashboard() {
                   </tbody>
                 </table>
               </div>
+              <Link
+                to="/logs"
+                className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 mb-6 rounded-lg shadow transition sm:hidden"
+              >
+                View Logs
+              </Link>
 
               {/* Mobile Cards */}
               <div className="md:hidden flex flex-col gap-4">
