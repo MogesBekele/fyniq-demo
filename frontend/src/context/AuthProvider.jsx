@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
 import axios from "axios";
+import { useContext } from "react";
 
 
 
@@ -67,4 +68,12 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAppContext must be used within an AppProvider");
+  }
+  return context;
 };

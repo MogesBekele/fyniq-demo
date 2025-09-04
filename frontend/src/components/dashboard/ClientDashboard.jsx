@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import FileUpload from "../FileUpload";
 import { toast } from "react-toastify";
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../../context/AuthProvider";
 
 export default function ClientDashboard() {
   const [uploadedFiles, setUploadedFiles] = useState([]);

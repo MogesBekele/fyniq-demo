@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRef } from "react";
-import { useAuth } from "../context/useAuth";
+import { useAuth } from "../context/AuthProvider";
 
 export default function FileUpload({ onUpload }) {
    const inputRef = useRef(null)
