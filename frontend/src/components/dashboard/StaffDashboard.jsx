@@ -83,7 +83,7 @@ export default function StaffDashboard() {
         <h1 className="text-xl md:text-3xl font-bold text-gray-700 ">
           Staff Dashboard
         </h1>
-        <div className="flex flex-col items-center gap-4 ">
+        <div className="flex max-sm:flex-col items-center gap-4 ">
           <Link
           to="/logs"
             className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition "
