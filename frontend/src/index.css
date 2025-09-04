@@ -1,1 +1,20 @@
 @import "tailwindcss";
+
+
+
+
+
+
+
+/* index.css or App.css */
+.toast-container {
+  width: 90% !important;
+  max-width: 300px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+}
+
+.toast-body {
+  padding: 4px 6px !important;
+  font-size: 0.8rem;
+}

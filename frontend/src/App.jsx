@@ -57,10 +57,8 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{
-          width: window.innerWidth < 400 ? "90%" : "250px", // 90% width on small screens
-          maxWidth: "350px", // optional max width
-        }}
+        toastClassName="toast-container"
+        bodyClassName="toast-body"
       />
     </Router>
   );
