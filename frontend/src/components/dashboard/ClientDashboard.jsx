@@ -68,7 +68,7 @@ export default function ClientDashboard() {
 
       {/* Uploaded Files */}
       {uploadedFiles.length > 0 && (
-        <div className="m-20 space-y-3">
+        <div className="m-20 space-y-3 max-sm:m-4">
           {uploadedFiles.map((file) => (
             <div
               key={file._id}
