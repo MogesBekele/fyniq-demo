@@ -11,28 +11,37 @@ export default function AdminLogs() {
 
   const formatDate = (date) => {
     if (!date) return "N/A";
+
+    const parsedDate = new Date(date);
+    if (isNaN(parsedDate)) return "N/A"; // fallback if invalid
+
     return new Intl.DateTimeFormat("en-US", {
       year: "numeric",
       month: "short",
       day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
-    }).format(new Date(date));
+    }).format(parsedDate);
   };
 
-  const fetchLogs = async () => {
-    try {
-      setLoading(true); // start loading
-      const res = await axios.get(`${API_URL}/api/logs`);
-      setLogs(
-        res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      );
-    } catch (err) {
-      console.error("Failed to fetch logs", err);
-    } finally {
-      setLoading(false); // stop loading
-    }
-  };
+const fetchLogs = async () => {
+  try {
+    setLoading(true);
+    const res = await axios.get(`${API_URL}/api/logs`);
+
+    // Sort newest first
+    const sorted = res.data.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+    setLogs(sorted);
+  } catch (err) {
+    console.error("Failed to fetch logs", err);
+  } finally {
+    setLoading(false);
+  }
+};
+
   useEffect(() => {
     fetchLogs();
   }, []);
