@@ -3,9 +3,14 @@ import { useState, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
 import axios from "axios";
 
+
+
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const API_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:4000"; // fallback to localhost
 
   useEffect(() => {
     const saved = localStorage.getItem("auth");
@@ -24,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   const handleAuth = async (endpoint, username, password, role) => {
     try {
       const res = await axios.post(
-        `http://localhost:4000/auth/${endpoint}`,
+        `${API_URL}/auth/${endpoint}`,
         { username, password, role },
         {
           headers: { "Content-Type": "application/json" },
@@ -44,7 +49,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const res = await fetch("http://localhost:4000/auth/logout", {
+      const res = await fetch(`${API_URL}/auth/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
@@ -58,7 +63,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register, logout, loading, API_URL }}>
       {children}
     </AuthContext.Provider>
   );

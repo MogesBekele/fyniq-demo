@@ -3,11 +3,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRef } from "react";
+import { useAuth } from "../context/useAuth";
 
 export default function FileUpload({ onUpload }) {
    const inputRef = useRef(null)
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
+ const { API_URL } = useAuth();
 
   const user = JSON.parse(localStorage.getItem("auth"));
 
@@ -37,7 +39,7 @@ export default function FileUpload({ onUpload }) {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/files/upload",
+        `${API_URL}/api/files/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

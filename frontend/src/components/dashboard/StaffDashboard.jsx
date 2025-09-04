@@ -5,13 +5,13 @@ import { toast } from "react-toastify"; // ✅ import toast
 
 export default function StaffDashboard() {
   const [files, setFiles] = useState([]);
-  const { logout } = useAuth();
+  const { logout, API_URL } = useAuth();
 
   // Fetch files on mount
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/api/files");
+        const res = await axios.get(`${API_URL}/api/files`);
         setFiles(res.data);
       } catch (err) {
         console.error("Error fetching files", err);

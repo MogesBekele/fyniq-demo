@@ -37,7 +37,7 @@ export const register = async (req, res) => {
     );
 
     res.status(201).json({ username: user.username, role: user.role, token });
-    console.log(`New user registered: ${username}`);
+   
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
@@ -72,7 +72,6 @@ export const login = async (req, res) => {
     );
 
     res.json({ username: user.username, role: user.role, token });
-    console.log(`User ${username} logged in`);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });

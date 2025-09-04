@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "../../context/useAuth";
+
 
 export default function AdminLogs() {
   const [logs, setLogs] = useState([]);
+   const { API_URL } = useAuth();
 
   const formatDate = (date) => {
     if (!date) return "N/A";
@@ -18,7 +21,7 @@ export default function AdminLogs() {
 
   const fetchLogs = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/logs");
+      const res = await axios.get(`${API_URL}/api/logs`);
       setLogs(
         res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       );

@@ -62,13 +62,13 @@ import { toast } from "react-toastify";
 
 export default function ClientDashboard() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const { logout } = useAuth();
+  const { logout, API_URL } = useAuth();
 
   useEffect(() => {
     // Fetch files on mount
     const fetchFiles = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/api/files");
+        const res = await axios.get(`${API_URL}/api/files`);
         setUploadedFiles(res.data);
       } catch (err) {
         console.error("Error fetching files", err);
@@ -81,7 +81,7 @@ export default function ClientDashboard() {
   const handleDelete = async (id) => {
     const user = JSON.parse(localStorage.getItem("auth"));
     try {
-      await axios.delete(`http://localhost:4000/api/files/${id}`, {
+      await axios.delete(`${API_URL}/api/files/${id}`, {
         data: { username: user.username },
       });
       setUploadedFiles((prev) => prev.filter((f) => f._id !== id));
