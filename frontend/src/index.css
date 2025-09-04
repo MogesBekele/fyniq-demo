@@ -1,20 +1,23 @@
 @import "tailwindcss";
 
+/* Toast styles for small screens only */
+@media (max-width: 400px) {
+  .toast-container {
+    width: 90% !important; /* small screen width */
+    max-width: 300px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
 
-
-
-
-
-
-/* index.css or App.css */
-.toast-container {
-  width: 90% !important;
-  max-width: 300px;
-  padding: 6px 10px;
-  font-size: 0.8rem;
+  .toast-body {
+    padding: 4px 6px !important;
+    font-size: 0.8rem;
+  }
 }
 
-.toast-body {
-  padding: 4px 6px !important;
-  font-size: 0.8rem;
+/* Optional: keep default toast styling for larger screens */
+@media (min-width: 401px) {
+  .toast-container {
+    width: 250px; /* default width */
+  }
 }
