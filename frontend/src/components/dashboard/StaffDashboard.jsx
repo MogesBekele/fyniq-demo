@@ -103,7 +103,7 @@ export default function StaffDashboard() {
         <div className="flex max-sm:flex-col items-center gap-4 ">
           <Link
             to="/logs"
-            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition "
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition max-sm:hidden"
           >
             View Logs
           </Link>
@@ -127,63 +127,72 @@ export default function StaffDashboard() {
             <p className="text-gray-500 text-lg">No files available.</p>
           </div>
         ) : (
-          <div className="grid gap-4 md:gap-6">
-            {/* Desktop Table */}
-            <div className="hidden md:block overflow-x-auto bg-white shadow rounded-lg">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-gray-200 text-gray-700 uppercase text-sm">
-                    <th className="py-3 px-4">Filename</th>
-                    <th className="py-3 px-4">Uploader</th>
-                    <th className="py-3 px-4">Uploaded At</th>
-                    <th className="py-3 px-4 text-center">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {files.map((file, idx) => (
-                    <tr
-                      key={file._id}
-                      className={`border-b border-gray-300 ${
-                        idx % 2 === 0 ? "bg-gray-50" : "bg-white"
-                      } hover:bg-blue-50 transition`}
-                    >
-                      <td className="py-3 px-4 break-words">
-                        {file.originalName}
-                      </td>
-                      <td className="py-3 px-4">{file.uploader}</td>
-                      <td className="py-3 px-4">
-                        {new Date(file.uploadedAt).toLocaleString()}
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        {renderActionButtons(file)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          <>
+            <Link
+              to="/logs"
+              className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition sm:hidden"
+            >
+              View Logs
+            </Link>
 
-            {/* Mobile Cards */}
-            <div className="md:hidden flex flex-col gap-4">
-              {files.map((file) => (
-                <div
-                  key={file._id}
-                  className="bg-white shadow rounded-lg p-4 flex flex-col gap-2"
-                >
-                  <p className="font-semibold text-gray-800 break-words">
-                    📄 {file.originalName}
-                  </p>
-                  <p className="text-gray-500 text-sm">
-                    Uploader: {file.uploader}
-                  </p>
-                  <p className="text-gray-400 text-sm">
-                    Uploaded: {new Date(file.uploadedAt).toLocaleString()}
-                  </p>
-                  {renderActionButtons(file)}
-                </div>
-              ))}
+            <div className="grid gap-4 md:gap-6">
+              {/* Desktop Table */}
+              <div className="hidden md:block overflow-x-auto bg-white shadow rounded-lg">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-gray-200 text-gray-700 uppercase text-sm">
+                      <th className="py-3 px-4">Filename</th>
+                      <th className="py-3 px-4">Uploader</th>
+                      <th className="py-3 px-4">Uploaded At</th>
+                      <th className="py-3 px-4 text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {files.map((file, idx) => (
+                      <tr
+                        key={file._id}
+                        className={`border-b border-gray-300 ${
+                          idx % 2 === 0 ? "bg-gray-50" : "bg-white"
+                        } hover:bg-blue-50 transition`}
+                      >
+                        <td className="py-3 px-4 break-words">
+                          {file.originalName}
+                        </td>
+                        <td className="py-3 px-4">{file.uploader}</td>
+                        <td className="py-3 px-4">
+                          {new Date(file.uploadedAt).toLocaleString()}
+                        </td>
+                        <td className="py-3 px-4 text-center">
+                          {renderActionButtons(file)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile Cards */}
+              <div className="md:hidden flex flex-col gap-4">
+                {files.map((file) => (
+                  <div
+                    key={file._id}
+                    className="bg-white shadow rounded-lg p-4 flex flex-col gap-2"
+                  >
+                    <p className="font-semibold text-gray-800 break-words">
+                      📄 {file.originalName}
+                    </p>
+                    <p className="text-gray-500 text-sm">
+                      Uploader: {file.uploader}
+                    </p>
+                    <p className="text-gray-400 text-sm">
+                      Uploaded: {new Date(file.uploadedAt).toLocaleString()}
+                    </p>
+                    {renderActionButtons(file)}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </>
         )}
       </main>
     </div>
