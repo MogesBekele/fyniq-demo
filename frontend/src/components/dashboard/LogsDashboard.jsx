@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 export default function AdminLogs() {
   const [logs, setLogs] = useState([]);
   const { API_URL } = useAuth();
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   const formatDate = (date) => {
     if (!date) return "N/A";
@@ -23,23 +23,22 @@ export default function AdminLogs() {
 
   const fetchLogs = async () => {
     try {
-      console.log("API_URL:", API_URL);
-
+      setLoading(true); // start loading
       const res = await axios.get(`${API_URL}/api/logs`);
-
       setLogs(
         res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       );
     } catch (err) {
       console.error("Failed to fetch logs", err);
+    } finally {
+      setLoading(false); // stop loading
     }
   };
-
-  useEffect(() => {
+    useEffect(() => {
     fetchLogs();
   }, []);
 
-    const handleBack = () => {
+  const handleBack = () => {
     navigate("/staff");
   };
 
@@ -83,7 +82,11 @@ export default function AdminLogs() {
           Back
         </button>
 
-        {logs.length === 0 ? (
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-600"></div>
+          </div>
+        ) : logs.length === 0 ? (
           <div className="flex justify-center items-center h-full">
             <p className="text-gray-400 text-lg">No logs available.</p>
           </div>
