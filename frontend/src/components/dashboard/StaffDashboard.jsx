@@ -85,7 +85,7 @@ export default function StaffDashboard() {
         </h1>
         <div className="flex items-center gap-4">
           <Link
-            href="/logs"
+          to="/logs"
             className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition"
           >
             View Logs
