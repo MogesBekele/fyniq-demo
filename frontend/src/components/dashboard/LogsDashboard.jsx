@@ -17,7 +17,6 @@ export default function AdminLogs() {
       day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
-      second: "2-digit",
     }).format(new Date(date));
   };
 
@@ -34,7 +33,7 @@ export default function AdminLogs() {
       setLoading(false); // stop loading
     }
   };
-    useEffect(() => {
+  useEffect(() => {
     fetchLogs();
   }, []);
 
