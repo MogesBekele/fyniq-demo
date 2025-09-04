@@ -8,6 +8,23 @@ import { Link } from "react-router-dom";
 export default function StaffDashboard() {
   const [files, setFiles] = useState([]);
   const { logout, API_URL } = useAuth();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFiles = async () => {
+      try {
+        setLoading(true); // start loading
+        const res = await axios.get(`${API_URL}/api/files`);
+        setFiles(res.data);
+      } catch (err) {
+        console.error("Error fetching files", err);
+        toast.error("Failed to fetch files ❌");
+      } finally {
+        setLoading(false); // stop loading
+      }
+    };
+    fetchFiles();
+  }, []);
 
   // Fetch files on mount
   useEffect(() => {
@@ -85,7 +102,7 @@ export default function StaffDashboard() {
         </h1>
         <div className="flex max-sm:flex-col items-center gap-4 ">
           <Link
-          to="/logs"
+            to="/logs"
             className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition "
           >
             View Logs
@@ -101,7 +118,11 @@ export default function StaffDashboard() {
 
       {/* Main Content */}
       <main className="flex-1 px-6 md:px-20 pb-10">
-        {files.length === 0 ? (
+        {loading ? (
+          <div className="flex justify-center items-center h-full">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-600"></div>
+          </div>
+        ) : files.length === 0 ? (
           <div className="flex justify-center items-center h-full">
             <p className="text-gray-500 text-lg">No files available.</p>
           </div>
