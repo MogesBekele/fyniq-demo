@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
+import { toast } from "react-toastify";
 
 export default function AuthPage() {
   const [username, setUsername] = useState("");
@@ -24,22 +25,35 @@ export default function AuthPage() {
     e.preventDefault();
 
     if (isRegister) {
-      const registeredUser = await register(username, password, role);
-      if (!registeredUser) return;
+      try {
+        const registeredUser = await register(username, password, role);
+        if (!registeredUser) return;
 
-      setIsRegister(false); // switch to login form
-      setUsername("");
-      setPassword("");
-      setRole("client"); // reset role
-      return; // do NOT navigate to dashboard
+        toast.success("Registration successful");
+        setIsRegister(false);
+        setUsername("");
+        setPassword("");
+        setRole("client");
+      } catch (err) {
+        // Check if backend sent a message
+        const message = err.response?.data?.message || "Registration failed";
+        toast.error(message);
+      }
+      return;
     }
 
     // Login flow
-    const loggedInUser = await login(username, password);
-    if (!loggedInUser) return;
+    try {
+      const loggedInUser = await login(username, password);
+      if (!loggedInUser) return;
 
-    const path = loggedInUser.role === "client" ? "/client" : "/staff";
-    navigate(path, { replace: true });
+      toast.success("Login successful");
+      const path = loggedInUser.role === "client" ? "/client" : "/staff";
+      navigate(path, { replace: true });
+    } catch (err) {
+      const message = err.response?.data?.message || "Login failed";
+      toast.error(message);
+    }
   };
 
   if (loading) return null;
