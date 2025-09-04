@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { toast } from "react-toastify"; // ✅ import toast
 import { useAuth } from "../../context/AuthProvider";
+import { Link } from "react-router-dom";
 
 export default function StaffDashboard() {
   const [files, setFiles] = useState([]);
@@ -83,12 +84,12 @@ export default function StaffDashboard() {
           Staff Dashboard
         </h1>
         <div className="flex items-center gap-4">
-          <a
+          <Link
             href="/logs"
             className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition"
           >
             View Logs
-          </a>
+          </Link>
           <button
             onClick={handleLogout}
             className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition hover:cursor-pointer"
