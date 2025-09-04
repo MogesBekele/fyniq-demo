@@ -96,7 +96,7 @@ export default function AuthPage() {
         {/* Submit button */}
         <button
           type="submit"
-          className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-blue-500 text-white font-semibold py-3 mt-10 rounded-xl shadow-md transition-colors duration-300"
+          className="bg-gradient-to-r hover:cursor-pointer from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-blue-500 text-white font-semibold py-3 mt-10 rounded-xl shadow-md transition-colors duration-300"
         >
           {isRegister ? "Register" : "Login"}
         </button>
