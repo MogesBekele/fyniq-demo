@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminLogs() {
   const [logs, setLogs] = useState([]);
   const { API_URL } = useAuth();
+    const navigate = useNavigate();
+
 
   const formatDate = (date) => {
     if (!date) return "N/A";
@@ -36,8 +39,8 @@ export default function AdminLogs() {
     fetchLogs();
   }, []);
 
-  const handleBack = () => {
-    window.location.href = "/staff";
+    const handleBack = () => {
+    navigate("/staff");
   };
 
   return (
