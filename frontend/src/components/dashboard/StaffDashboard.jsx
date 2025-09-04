@@ -83,10 +83,10 @@ export default function StaffDashboard() {
         <h1 className="text-2xl md:text-3xl font-bold text-gray-700">
           Staff Dashboard
         </h1>
-        <div className="flex items-center gap-4 max-sm:hidden">
+        <div className="flex items-center gap-4 ">
           <Link
           to="/logs"
-            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition"
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow transition max-sm:hidden"
           >
             View Logs
           </Link>
