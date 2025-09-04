@@ -48,16 +48,19 @@ function App() {
 
       {/* Toast container for global toast notifications */}
       <ToastContainer
-        position="top-right" // where the toast appears
-        autoClose={500} // all toasts disappear after 1.5s
-        hideProgressBar={false} // show progress bar
-        newestOnTop={true} // new toasts appear on top
-        closeOnClick // close toast on click
-        rtl={false} // left-to-right layout
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{ width: "250px" }}
+        style={{
+          width: window.innerWidth < 400 ? "90%" : "250px", // 90% width on small screens
+          maxWidth: "350px", // optional max width
+        }}
       />
     </Router>
   );
