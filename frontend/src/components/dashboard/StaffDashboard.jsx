@@ -165,7 +165,7 @@ export default function StaffDashboard() {
               </div>
               <Link
                 to="/logs"
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 mb-6 w-32 rounded-lg shadow transition sm:hidden"
+                className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 mb-6 w-30 rounded-lg shadow transition sm:hidden"
               >
                 View Logs
               </Link>
