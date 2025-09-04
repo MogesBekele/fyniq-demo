@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 
-
 export default function AuthPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState(""); // 👈 password state
@@ -28,7 +27,6 @@ export default function AuthPage() {
       const registeredUser = await register(username, password, role);
       if (!registeredUser) return;
 
-      alert("Registration successful! Please login."); // optional
       setIsRegister(false); // switch to login form
       setUsername("");
       setPassword("");
