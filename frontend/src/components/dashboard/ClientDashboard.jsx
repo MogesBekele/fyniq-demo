@@ -48,7 +48,7 @@ export default function ClientDashboard() {
     <div className="min-h-screen w-full bg-gray-100 flex flex-col">
       {/* Header */}
       <header className="w-full bg-white shadow px-10 py-4 mb-10 flex justify-between items-center sticky top-0 z-10">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-700">
+        <h1 className="text-xl md:text-3xl font-bold text-gray-700">
           Client Dashboard
         </h1>
         <button
