@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 export default function AuthPage() {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState(""); // 👈 password state
+  const [password, setPassword] = useState("");
   const [role, setRole] = useState("client");
   const [isRegister, setIsRegister] = useState(false);
   const { user, login, register, loading } = useAuth();
@@ -35,14 +35,12 @@ export default function AuthPage() {
         setPassword("");
         setRole("client");
       } catch (err) {
-        // Check if backend sent a message
         const message = err.response?.data?.message || "Registration failed";
         toast.error(message);
       }
       return;
     }
 
-    // Login flow
     try {
       const loggedInUser = await login(username, password);
       if (!loggedInUser) return;
@@ -62,42 +60,42 @@ export default function AuthPage() {
     <div className="flex justify-center items-center min-h-screen w-full bg-gradient-to-br from-blue-100 to-indigo-200 px-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-10 rounded-3xl shadow-2xl flex flex-col w-full max-w-md"
+        className="bg-white p-6 md:p-8 rounded-2xl shadow-2xl flex flex-col w-full max-w-md"
       >
-        <h2 className="text-4xl font-bold mb-8 text-center text-blue-700">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-center text-blue-700">
           {isRegister ? "Register" : "Login"}
         </h2>
 
         {/* Username */}
-        <label className="block mb-2 font-medium text-gray-700">Username</label>
+        <label className="block mb-1 font-medium text-gray-700">Username</label>
         <input
           type="text"
           placeholder="Enter your username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="border border-gray-300 rounded-xl p-3 mb-6 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          className="border border-gray-300 rounded-xl p-2 mb-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           required
         />
 
         {/* Password */}
-        <label className="block mb-2 font-medium text-gray-700">Password</label>
+        <label className="block mb-1 font-medium text-gray-700">Password</label>
         <input
           type="password"
           placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="border border-gray-300 rounded-xl p-3 mb-6 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          className="border border-gray-300 rounded-xl p-2 mb-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           required
         />
 
-        {/* Role (only for register, optional for login) */}
+        {/* Role (register only) */}
         {isRegister && (
           <>
-            <label className="block mb-2 font-medium text-gray-700">Role</label>
+            <label className="block mb-1 font-medium text-gray-700">Role</label>
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="border border-gray-200 rounded-xl p-3 mb-10 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+              className="border border-gray-200 rounded-xl p-2 mb-14 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             >
               <option value="client">Client</option>
               <option value="staff">Staff</option>
@@ -105,10 +103,10 @@ export default function AuthPage() {
           </>
         )}
 
-        {/* Submit button */}
+        {/* Submit */}
         <button
           type="submit"
-          className="bg-gradient-to-r hover:cursor-pointer from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-blue-500 text-white font-semibold py-3 mt-10 rounded-xl shadow-md transition-colors duration-300"
+          className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-blue-500 text-white font-semibold py-2 mt-4 rounded-xl shadow-md transition-colors duration-300"
         >
           {isRegister ? "Register" : "Login"}
         </button>
@@ -116,11 +114,11 @@ export default function AuthPage() {
         {/* Toggle link */}
         <p
           onClick={() => setIsRegister(!isRegister)}
-          className="mt-6 text-center text-sm text-blue-600 cursor-pointer hover:underline"
+          className="mt-3 text-center text-sm text-blue-600 cursor-pointer hover:underline"
         >
           {isRegister
-            ? "Already have an account?  Login"
-            : "Don't have an account?  Register"}
+            ? "Already have an account? Login"
+            : "Don't have an account? Register"}
         </p>
       </form>
     </div>
