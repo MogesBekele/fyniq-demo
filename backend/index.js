@@ -12,8 +12,7 @@ dotenv.config(); // <-- load env variables
 connectDB();      // connect to MongoDB
 
 const app = express();
-
-app.use(cors());
+app.use(cors({ origin: "*" })); // Just for development
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 console.log("JWT_SECRET =", process.env.JWT_SECRET);
