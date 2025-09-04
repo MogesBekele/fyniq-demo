@@ -6,7 +6,7 @@ import authRoutes from "./routes/auth.js";
 import fileRoutes from "./routes/files.js";
 import connectDB from "./config/db.js";
 import logRoutes from "./routes/logRoutes.js";
-import logsRouter from "./routes/logs.js";
+
 
 dotenv.config(); // <-- load env variables
 connectDB();      // connect to MongoDB
@@ -28,7 +28,7 @@ console.log("JWT_SECRET =", process.env.JWT_SECRET);
 app.use("/auth", authRoutes);
 app.use("/api/files", fileRoutes);
 app.use("/api/logs", logRoutes);
-app.use("/api/logs", logsRouter);
+
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
