@@ -7,8 +7,8 @@ import connectDB from "./config/db.js";
 import logRoutes from "./routes/logRoutes.js";
 
 
-dotenv.config(); // <-- load env variables
-connectDB(); // connect to MongoDB
+dotenv.config();
+connectDB();
 
 const app = express();
 
