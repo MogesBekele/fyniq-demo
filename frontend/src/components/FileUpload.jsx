@@ -21,7 +21,7 @@ export default function FileUpload({ onUpload }) {
     formData.append("username", user.username);
     formData.append("role", user.role);
 
-    // Simulate progress in steps
+  
     setProgress(0);
     const steps = [25, 50, 75, 100];
     let stepIndex = 0;
