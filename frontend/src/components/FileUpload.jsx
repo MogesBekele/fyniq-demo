@@ -1,15 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import { useRef } from "react";
 import { useAuth } from "../context/AuthProvider";
 
 export default function FileUpload({ onUpload }) {
-   const inputRef = useRef(null)
+  const inputRef = useRef(null);
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
- const { API_URL } = useAuth();
+  const { API_URL } = useAuth();
 
   const user = JSON.parse(localStorage.getItem("auth"));
 
@@ -21,7 +21,6 @@ export default function FileUpload({ onUpload }) {
     formData.append("username", user.username);
     formData.append("role", user.role);
 
-  
     setProgress(0);
     const steps = [25, 50, 75, 100];
     let stepIndex = 0;
@@ -38,13 +37,9 @@ export default function FileUpload({ onUpload }) {
     }, 300);
 
     try {
-      const res = await axios.post(
-        `${API_URL}/api/files/upload`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const res = await axios.post(`${API_URL}/api/files/upload`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       if (onUpload) onUpload(res.data.file);
 
@@ -53,7 +48,7 @@ export default function FileUpload({ onUpload }) {
 
         setProgress(0);
       }, 1300); // slightly longer to match fake progress
-      inputRef.current.value = ''
+      inputRef.current.value = "";
     } catch (err) {
       console.error(err);
       clearInterval(interval);
@@ -97,7 +92,6 @@ export default function FileUpload({ onUpload }) {
     </div>
   );
 }
-
 
 // ----------------------------
 // MOCK FILE UPLOAD (CLIENT SIDE)
