@@ -92,9 +92,6 @@ export default function FileUpload({ onUpload }) {
     </div>
   );
 }
-
-
-
 // ----------------------------
 // MOCK FILE UPLOAD (CLIENT SIDE)
 // ----------------------------
@@ -103,6 +100,7 @@ export default function FileUpload({ onUpload }) {
 
 // export const mockFileUpload = async (file, user) => {
 //   console.log(`Mock upload called for file: ${file.name}, user: ${user.username}`);
+
 
 //   return new Promise((resolve, reject) => {
 //     // Simulate a progress-like delay
