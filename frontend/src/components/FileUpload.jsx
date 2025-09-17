@@ -66,6 +66,7 @@ export default function FileUpload({ onUpload }) {
       <div className="flex flex-col sm:flex-row items-center w-full gap-3">
         <input
           type="file"
+          data-testid="file-input"
           ref={inputRef}
           onChange={(e) => setFile(e.target.files[0])}
           className="border border-gray-300 rounded-lg p-2 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
