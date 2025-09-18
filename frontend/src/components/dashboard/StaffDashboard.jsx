@@ -26,19 +26,7 @@ export default function StaffDashboard() {
     fetchFiles();
   }, []);
 
-  // Fetch files on mount
-  useEffect(() => {
-    const fetchFiles = async () => {
-      try {
-        const res = await axios.get(`${API_URL}/api/files`);
-        setFiles(res.data);
-      } catch (err) {
-        console.error("Error fetching files", err);
-        toast.error("Failed to fetch files ❌");
-      }
-    };
-    fetchFiles();
-  }, []);
+
 
   // Handle approve/reject actions
   const handleAction = async (fileId, action) => {
