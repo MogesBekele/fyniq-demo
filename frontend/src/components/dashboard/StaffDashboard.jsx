@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthProvider";
 import { Link } from "react-router-dom";
 
@@ -53,7 +53,6 @@ export default function StaffDashboard() {
             : f
         )
       );
-
       toast.success(`${action === "approve" ? "Validated" : "Rejected"}`);
     } catch (err) {
       console.error(`${action} failed`, err);
