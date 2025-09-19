@@ -3,7 +3,6 @@ import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import axios from "axios";
 import { MemoryRouter } from "react-router-dom";
-import { useAuth as mockUseAuth } from "../../context/AuthProvider";
 import AdminLogs from "./LogsDashboard";
 
 // Mock axios
@@ -12,9 +11,8 @@ vi.mock("axios", () => ({
 }));
 
 // Mock useAuth
-vi.mock("../../context/AuthProvider");
-mockUseAuth.mockImplementation(() => ({
-  API_URL: "http://mock-api.com",
+vi.mock("../../context/AuthProvider", () => ({
+  useAuth: () => ({ API_URL: "http://mock-api.com" }),
 }));
 
 // Mock useNavigate
@@ -57,22 +55,23 @@ describe("AdminLogs", () => {
   });
 
   it("renders logs correctly when API returns data", async () => {
+    const now = new Date();
     const mockLogs = [
       {
         _id: "1",
-        action: "validated",
+        action: "validate",
         file: "file1.pdf",
         user: "moges",
-        timestamp: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
+        timestamp: now.toISOString(),
+        createdAt: now.toISOString(),
       },
       {
         _id: "2",
-        action: "rejected",
+        action: "reject",
         file: "file2.pdf",
         user: "alex",
-        timestamp: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
+        timestamp: now.toISOString(),
+        createdAt: now.toISOString(),
       },
     ];
 
@@ -80,15 +79,25 @@ describe("AdminLogs", () => {
 
     renderWithRouter(<AdminLogs />);
 
-    // Wait for async render
-   expect(await screen.findByText(/validated/i)).toBeInTheDocument(); // ✅ works
+    // Wait for all matching actions to appear
+    const validateRows = await screen.findAllByText(/validate/i);
+    expect(validateRows.length).toBeGreaterThan(0);
 
-    expect(screen.getByText(/file1\.pdf/i)).toBeInTheDocument();
-    expect(screen.getByText(/moges/i)).toBeInTheDocument();
+    const rejectRows = await screen.findAllByText(/reject/i);
+    expect(rejectRows.length).toBeGreaterThan(0);
 
-    expect(screen.getByText(/rejected/i)).toBeInTheDocument();
-    expect(screen.getByText(/file2\.pdf/i)).toBeInTheDocument();
-    expect(screen.getByText(/alex/i)).toBeInTheDocument();
+    // Assert files and users
+    const file1Elements = await screen.findAllByText(/file1\.pdf/i);
+    expect(file1Elements.length).toBeGreaterThan(0);
+
+    const file2Elements = await screen.findAllByText(/file2\.pdf/i);
+    expect(file2Elements.length).toBeGreaterThan(0);
+
+    const mogesElements = await screen.findAllByText(/moges/i);
+    expect(mogesElements.length).toBeGreaterThan(0);
+
+    const alexElements = await screen.findAllByText(/alex/i);
+    expect(alexElements.length).toBeGreaterThan(0);
   });
 
   it("navigates back when Back button is clicked", async () => {

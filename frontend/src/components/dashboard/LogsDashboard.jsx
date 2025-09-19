@@ -92,7 +92,7 @@ export default function AdminLogs() {
 
         {loading ? (
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-600"></div>
+            <div role="status" className="animate-spin  rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-600"></div>
           </div>
         ) : logs.length === 0 ? (
           <div className="flex justify-center items-center h-full">
@@ -119,7 +119,7 @@ export default function AdminLogs() {
                         idx % 2 === 0 ? "bg-white" : "bg-gray-50"
                       } hover:bg-blue-50 transition`}
                     >
-                      <td className="py-3 px-4 capitalize font-medium text-gray-700">
+                      <td className="py-3 px-4  font-medium text-gray-700">
                         {log.action}
                       </td>
                       <td className="py-3 px-4 break-all">{log.file}</td>
@@ -140,7 +140,7 @@ export default function AdminLogs() {
                   key={log._id}
                   className="bg-white shadow-md rounded-xl p-4 flex flex-col gap-1 hover:shadow-lg transition"
                 >
-                  <p className="font-semibold capitalize text-gray-800">
+                  <p className="font-semibold  text-gray-800">
                     Action: {log.action}
                   </p>
                   <p className="text-gray-600 text-sm break-words">
