@@ -4,7 +4,6 @@ import AuthPage from "./LoginForm";
 import { toast } from "react-toastify";
 import { MemoryRouter } from "react-router-dom";
 import { vi, describe, test, beforeEach, expect } from "vitest";
-
 // Mock toast
 vi.mock("react-toastify", () => ({
   toast: {
