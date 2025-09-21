@@ -78,10 +78,14 @@ describe("StaffDashboard", () => {
     expect(fileRow).toBeInTheDocument();
     expect(within(fileRow).getByText(/alex/i)).toBeInTheDocument();
 
-    const validateBtn = within(fileRow).getByRole("button", { name: /validate/i });
+    const validateBtn = within(fileRow).getByRole("button", {
+      name: /validate/i,
+    });
     await userEvent.click(validateBtn);
 
-    await waitFor(() => expect(toast.success).toHaveBeenCalledWith("Validated"));
+    await waitFor(() =>
+      expect(toast.success).toHaveBeenCalledWith("Validated")
+    );
   });
 
   it("rejects a file when Reject button is clicked", async () => {
