@@ -43,7 +43,6 @@ describe("AdminLogs", () => {
       expect(screen.getByText(/No logs available/i)).toBeInTheDocument()
     );
   });
-
   it("shows no logs message when API returns empty array", async () => {
     axios.get.mockResolvedValueOnce({ data: [] });
 
