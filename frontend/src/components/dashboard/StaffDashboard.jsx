@@ -54,7 +54,6 @@ export default function StaffDashboard() {
     toast.info("Logged out successfully");
     window.location.href = "/";
   };
-
   // Render action buttons based on file status
   const renderActionButtons = (file) => {
     if (file.status === "approved")
