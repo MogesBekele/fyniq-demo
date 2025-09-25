@@ -123,5 +123,6 @@ describe("StaffDashboard", () => {
     expect(localStorage.getItem("auth")).toBeNull();
     expect(toast.info).toHaveBeenCalledWith("Logged out successfully");
     expect(window.location.href).toBe("/");
+
   });
 });
