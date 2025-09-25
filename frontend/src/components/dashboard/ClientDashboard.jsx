@@ -79,7 +79,7 @@ export default function ClientDashboard() {
               </p>
               <button
                 onClick={() => handleDelete(file._id)}
-                className="text-red-500 hover:text-red-700"
+                className="text-red-500 hover:text-red-700 hover:cursor-pointer"
               >
                 Delete
               </button>
