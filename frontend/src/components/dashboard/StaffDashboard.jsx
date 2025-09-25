@@ -65,13 +65,13 @@ export default function StaffDashboard() {
       <div className="flex gap-2 justify-center">
         <button
           onClick={() => handleAction(file._id, "approve")}
-          className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg shadow transition"
+          className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg shadow transition hover:cursor-pointer"
         >
           Validate
         </button>
         <button
           onClick={() => handleAction(file._id, "reject")}
-          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg shadow transition"
+          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg shadow transition hover:cursor-pointer"
         >
           Reject
         </button>
