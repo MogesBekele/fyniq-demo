@@ -48,6 +48,7 @@ export default function StaffDashboard() {
     }
   };
 
+  
   const handleLogout = () => {
     localStorage.removeItem("auth");
     logout();
