@@ -116,7 +116,6 @@ describe("StaffDashboard", () => {
     axios.get.mockResolvedValue({ data: [] });
 
     renderWithRouter(<StaffDashboard />);
-
     const logoutBtn = await screen.findByRole("button", { name: /logout/i });
     await userEvent.click(logoutBtn);
 
