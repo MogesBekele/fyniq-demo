@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 
 // --- Mocks ---
 vi.mock("axios");
-
 vi.mock("react-toastify", () => ({
   toast: {
     error: vi.fn(),
