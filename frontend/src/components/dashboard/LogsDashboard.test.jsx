@@ -47,6 +47,7 @@ describe("AdminLogs", () => {
     axios.get.mockResolvedValueOnce({ data: [] });
 
     renderWithRouter(<AdminLogs />);
+    
 
     await waitFor(() =>
       expect(screen.getByText(/No logs available/i)).toBeInTheDocument()
