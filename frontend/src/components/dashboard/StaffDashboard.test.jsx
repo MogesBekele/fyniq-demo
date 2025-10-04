@@ -114,6 +114,7 @@ describe("StaffDashboard", () => {
 
   it("logs out and clears localStorage", async () => {
     axios.get.mockResolvedValue({ data: [] });
+    
 
     renderWithRouter(<StaffDashboard />);
     const logoutBtn = await screen.findByRole("button", { name: /logout/i });
