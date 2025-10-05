@@ -79,7 +79,6 @@ describe("ClientDashboard", () => {
     const logoutBtn = await screen.findByRole("button", { name: /logout/i });
     await userEvent.click(logoutBtn);
     
-
     expect(localStorage.getItem("auth")).toBeNull();
     expect(toast.info).toHaveBeenCalledWith("Logged out successfully");
   });
