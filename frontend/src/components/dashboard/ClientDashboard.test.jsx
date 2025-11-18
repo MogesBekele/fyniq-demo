@@ -43,7 +43,7 @@ describe("ClientDashboard", () => {
   });
 
   test("deletes a file when delete button is clicked", async () => {
-    // Arrange: mock GET so the component has something to render
+   
     axios.get.mockResolvedValueOnce({
       data: [{ _id: "1", originalName: "some file name" }],
     });
