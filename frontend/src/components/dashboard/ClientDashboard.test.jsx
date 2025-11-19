@@ -34,7 +34,6 @@ describe("ClientDashboard", () => {
     });
 
     render(<ClientDashboard />);
-
     expect(axios.get).toHaveBeenCalledWith("http://mock-api.com/api/files");
 
     await waitFor(() => {
